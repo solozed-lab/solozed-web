@@ -1,0 +1,56 @@
+---
+import Layout from '../layouts/Layout.astro';
+import BackgroundLayer from '../components/react/BackgroundLayer';
+import ShinyText from '../components/react/ShinyText';
+import '../styles/global.css';
+---
+<Layout title="solozed">
+  <BackgroundLayer client:load />
+
+  <main class="page-content">
+    <div class="text-block">
+      <div class="text-line text-line-left">
+        <ShinyText
+          client:load
+          text="AI 时代，"
+          speed={2}
+          color="#c0c0c0"
+          shineColor="#ffffff"
+          spread={120}
+          yoyo={true}
+          delay={0}
+        />
+      </div>
+
+      <div class="text-line text-line-left" style="margin-top: 0.1em;">
+        <ShinyText
+          client:load
+          text="值得更加从容"
+          speed={2}
+          color="#c0c0c0"
+          shineColor="#ffffff"
+          spread={120}
+          yoyo={true}
+          delay={0.8}
+        />
+      </div>
+
+      <div class="text-line-english" style="margin-top: 0.5em;">
+        <ShinyText
+          client:load
+          text="The Age of AI, the grace to be"
+          speed={1.5}
+          color="#888888"
+          shineColor="#e0e0e0"
+          spread={90}
+          yoyo={true}
+          delay={1.6}
+        />
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    &copy; 2026 solozed. All rights reserved.
+  </footer>
+</Layout>
