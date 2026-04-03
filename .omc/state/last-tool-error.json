@@ -1,0 +1,7 @@
+{
+  "tool_name": "Bash",
+  "tool_input_preview": "{\"command\":\"git remote set-url origin https://github.com/solozed-lab/solozed-web.git && git reset --soft HEAD~1 && git rm -rf --cached .omc/ 2>/dev/null; git commit -m \\\"chore: update page title\\\" && ...",
+  "error": "Exit code 128\nrm '.omc/state/agent-replay-f73446b6-25ff-4def-ab0b-7e1b6c6cc484.jsonl'\nrm '.omc/state/hud-state.json'\nrm '.omc/state/hud-stdin-cache.json'\nrm '.omc/state/idle-notif-cooldown.json'\nrm '.omc/state/last-tool-error.json'\n[main 97be113] chore: update page title\n 1 file changed, 1 insertion(+), 1 deletion(-)\nfatal: could not read Username for 'https://github.com': Device not configured",
+  "timestamp": "2026-04-03T13:10:44.439Z",
+  "retry_count": 2
+}
