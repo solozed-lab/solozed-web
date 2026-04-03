@@ -1,8 +1,17 @@
 ---
 interface Props {
-  title: string;
+  title?: string;
+  description?: string;
+  pathname?: string;
 }
-const { title } = Astro.props;
+const {
+  title = 'AI时代，值得更加从容 | solozed',
+  description = '在AI时代，solozed探索技术与生活的从容之道。The Age of AI, the grace to be — 让AI成为从容生活的助力，而非焦虑的来源。',
+  pathname = '/',
+} = Astro.props;
+
+const siteUrl = 'https://solozed.com';
+const canonicalUrl = `${siteUrl}${pathname}`;
 ---
 <!doctype html>
 <html lang="zh-CN">
@@ -11,10 +20,79 @@ const { title } = Astro.props;
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="generator" content={Astro.generator} />
+
+    <!-- SEO -->
     <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="keywords" content="AI时代,人工智能,从容,AI生活,技术从容,solozed,The Age of AI,the grace to be" />
+    <meta name="author" content="solozed" />
+    <meta name="robots" content="index, follow" />
+    <meta name="googlebot" content="index, follow" />
+    <link rel="canonical" href={canonicalUrl} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:site_name" content="solozed" />
+    <meta property="og:locale" content="zh_CN" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+
+    <!-- GEO / 地域标签 -->
+    <meta name="geo.region" content="CN" />
+    <meta name="geo.placename" content="solozed" />
+    <meta name="geo.position" content="39.9042;116.4074" />
+    <meta name="ICBM" content="39.9042, 116.4074" />
+
+    <!-- Baidu -->
+    <meta name="baidu-site-verification" content="" />
+    <meta name="baidu-site-verification" content="" />
+
+    <!-- Sogou -->
+    <meta name="sogou_site_verification" content="" />
+
+    <!-- Naver -->
+    <meta name="naver-site-verification" content="" />
+
+    <!-- Google -->
+    <meta name="google-site-verification" content="" />
+
+    <!-- Alternate language -->
+    <link rel="alternate" hreflang="zh-Hans" href={canonicalUrl} />
+    <link rel="alternate" hreflang="en" href={canonicalUrl} />
+    <link rel="alternate" hreflang="x-default" href={canonicalUrl} />
+
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+
+    <!-- Structured Data -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "solozed",
+      "url": siteUrl,
+      "description": description,
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": `${siteUrl}/?q={search_term_string}`,
+        "query-input": "required name=search_term_string"
+      }
+    })} />
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "solozed",
+      "url": siteUrl,
+      "description": description,
+      "sameAs": []
+    })} />
   </head>
   <body>
     <slot />
