@@ -3,7 +3,10 @@ import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
 
+import cloudflare from '@astrojs/cloudflare';
+
 export default defineConfig({
   site: 'https://solozed.com',
   integrations: [react(), sitemap()],
+  adapter: cloudflare(),
 });
