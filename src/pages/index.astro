@@ -2,10 +2,12 @@
 import Layout from '../layouts/Layout.astro';
 import BackgroundLayer from '../components/react/BackgroundLayer';
 import ShinyText from '../components/react/ShinyText';
+import BlogNav from '../components/BlogNav.astro';
 import '../styles/global.css';
 ---
 <Layout title="Solozed - The Age of AI, the grace to be">
   <BackgroundLayer client:load />
+  <BlogNav currentPath="/" />
 
   <main class="page-content">
     <div class="text-block">

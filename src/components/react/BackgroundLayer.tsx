@@ -18,9 +18,9 @@ export default function BackgroundLayer() {
       <div className="background-aurora">
         <Aurora
           colorStops={['#00f0ff', '#7b2fff', '#ff0080']}
-          amplitude={1.5}
+          amplitude={0.8}
           blend={0.6}
-          speed={0.2}
+          speed={0.05}
         />
       </div>
     </div>

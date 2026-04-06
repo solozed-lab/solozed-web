@@ -1,0 +1,132 @@
+---
+interface Props {
+  currentPath?: string;
+  theme?: 'dark' | 'light';
+}
+
+const { currentPath = '/', theme = 'dark' } = Astro.props;
+---
+
+<nav class={`blog-nav nav-${theme}`} aria-label="Blog navigation">
+  <div class="nav-glass">
+    <a href="/" class:list={['nav-btn', { active: currentPath === '/' }]} style={theme === 'dark' ? 'color:rgba(255,255,255,0.85)' : 'color:#475569'}>Home</a>
+    <a href="/blog" class:list={['nav-btn', { active: currentPath === '/blog' }]} style={theme === 'dark' ? 'color:rgba(255,255,255,0.85)' : 'color:#475569'}>Blog</a>
+  </div>
+</nav>
+
+<style>
+  .blog-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    padding: 1.25rem 2rem;
+  }
+
+  .nav-glass {
+    display: flex;
+    gap: 0.5rem;
+    padding: 0.375rem 0.625rem;
+    backdrop-filter: blur(32px);
+    -webkit-backdrop-filter: blur(32px);
+    border-radius: 9999px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+    max-width: 280px;
+    width: 100%;
+    transition: all 0.4s ease;
+    transform: scale(1);
+  }
+
+  .nav-glass:hover {
+    transform: scale(1.02);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+  }
+
+  /* Dark theme (homepage) */
+  .nav-dark .nav-glass {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .nav-dark .nav-btn {
+    color: rgba(255, 255, 255, 0.85) !important;
+  }
+
+  .nav-dark .nav-btn.active {
+    background: rgba(255, 255, 255, 0.15);
+    color: #ffffff !important;
+    border-color: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.05);
+  }
+
+  /* Light theme (blog pages) */
+  .nav-light .nav-glass {
+    background: rgba(255, 255, 255, 0.3);
+    border: 1px solid rgba(139, 158, 255, 0.2);
+  }
+
+  .nav-light .nav-btn {
+    color: #475569;
+  }
+
+  .nav-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.4s ease;
+    border: 1px solid transparent;
+    letter-spacing: 0.02em;
+    transform: scale(1);
+  }
+
+  .nav-btn:hover {
+    transform: scale(1.05);
+  }
+
+  .nav-dark .nav-btn:hover {
+    background: rgba(255, 255, 255, 0.12);
+    color: #ffffff !important;
+    box-shadow: 0 0 20px rgba(56, 217, 217, 0.1);
+  }
+
+  .nav-light .nav-btn:hover {
+    background: rgba(255, 255, 255, 0.4);
+    color: #1E293B;
+  }
+
+  .nav-light .nav-btn.active {
+    background: rgba(255, 255, 255, 0.4);
+    color: #1E293B;
+    border-color: rgba(139, 158, 255, 0.1);
+  }
+
+  .nav-btn:focus-visible {
+    outline: 2px solid #0E7490;
+    outline-offset: 2px;
+  }
+
+  @media (max-width: 768px) {
+    .blog-nav {
+      padding: 1rem 1.25rem;
+    }
+
+    .nav-glass {
+      max-width: 240px;
+      padding: 0.3125rem 0.5rem;
+    }
+
+    .nav-btn {
+      padding: 0.4375rem 0.75rem;
+      font-size: 0.75rem;
+    }
+  }
+</style>

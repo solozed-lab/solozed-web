@@ -1,6 +1,17 @@
 import { useRef, useEffect } from 'react';
 import './ShapeGrid.css';
 
+interface ShapeGridProps {
+  direction?: 'left' | 'right';
+  speed?: number;
+  borderColor?: string;
+  squareSize?: number;
+  hoverFillColor?: string;
+  shape?: 'square' | 'hexagon' | 'triangle' | 'circle';
+  hoverTrailAmount?: number;
+  className?: string;
+}
+
 const ShapeGrid = ({
   direction = 'right',
   speed = 1,
@@ -10,7 +21,7 @@ const ShapeGrid = ({
   shape = 'square',
   hoverTrailAmount = 0,
   className = ''
-}) => {
+}: ShapeGridProps) => {
   const canvasRef = useRef(null);
   const requestRef = useRef(null);
   const numSquaresX = useRef();
