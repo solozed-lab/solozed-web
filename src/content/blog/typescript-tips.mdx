@@ -1,0 +1,86 @@
+---
+title: "TypeScript 类型体操心得"
+description: "从日常开发中提炼的高级类型技巧，让你的代码更健壮、更易维护，少走弯路。"
+pubDate: 2026-02-20
+tags: ["TypeScript", "Frontend"]
+---
+
+TypeScript 的类型系统是一个强大的工具，但很多人只用了它的冰山一角。这里分享一些我在项目中常用的类型技巧。
+
+## 基础：类型推断
+
+不要总是手动声明类型，让 TypeScript 自己推断：
+
+```typescript
+// 过度声明
+const name: string = "Hello";
+const age: number = 25;
+
+// 简洁写法
+const name = "Hello";
+const age = 25;
+```
+
+## 进阶：条件类型
+
+条件类型是类型系统中的"if-else"：
+
+```typescript
+type IsArray<T> = T extends any[] ? true : false;
+
+type A = IsArray<string[]>; // true
+type B = IsArray<string>;    // false
+```
+
+## 实用：提取工具类型
+
+Astro 的 `CollectionEntry` 就是一个很好的例子：
+
+```typescript
+import { getCollection } from 'astro:content';
+
+type BlogPost = CollectionEntry<'blog'>['data'];
+
+// 现在 BlogPost 包含了所有 blog 集合的数据类型
+const posts = await getCollection('blog');
+posts.map(post => post.data.title); // 类型安全！
+```
+
+## 高级：模板字面量类型
+
+这个技巧让我爱不释手：
+
+```typescript
+type EventName = 'click' | 'focus' | 'blur';
+type Handler = `on${Capitalize<EventName>}`;
+
+// Handler = 'onClick' | 'onFocus' | 'onBlur'
+```
+
+## 实践：创建运行时验证
+
+结合 Zod 可以做到类型和验证的双保险：
+
+```typescript
+import { z } from 'zod';
+
+const schema = z.object({
+  title: z.string(),
+  pubDate: z.coerce.date(),
+  tags: z.array(z.string()).default([]),
+});
+
+// 运行时验证 + 类型推断
+const result = schema.safeParse(postData);
+if (result.success) {
+  const validated: z.infer<typeof schema> = result.data;
+}
+```
+
+## 小贴士
+
+1. **避免 `any`**：用 `unknown` 代替，然后在使用时缩小范围
+2. **善用 `satisfies`**：验证类型的同时保留类型推断
+3. **类型即文档**：`type Props = { readonly id: string }` 告诉别人这是不可变的
+
+希望这些技巧对你有帮助！类型体操没有终点，持续学习。
