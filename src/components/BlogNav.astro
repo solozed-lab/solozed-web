@@ -30,54 +30,46 @@ const { currentPath = '/', theme = 'dark' } = Astro.props;
     display: flex;
     gap: 0.5rem;
     padding: 0.375rem 0.625rem;
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(32px);
+    -webkit-backdrop-filter: blur(32px);
     border-radius: 9999px;
-    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.02);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
     max-width: 280px;
     width: 100%;
+    transition: all 0.4s ease;
+    transform: scale(1);
+  }
+
+  .nav-glass:hover {
+    transform: scale(1.02);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
   }
 
   /* Dark theme (homepage) */
   .nav-dark .nav-glass {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.2);
   }
 
   .nav-dark .nav-btn {
     color: rgba(255, 255, 255, 0.85) !important;
   }
 
-  .nav-dark .nav-btn:hover {
+  .nav-dark .nav-btn.active {
     background: rgba(255, 255, 255, 0.15);
     color: #ffffff !important;
-  }
-
-  .nav-dark .nav-btn.active {
-    background: rgba(255, 255, 255, 0.2);
-    color: #ffffff !important;
-    border-color: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.05);
   }
 
   /* Light theme (blog pages) */
   .nav-light .nav-glass {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(139, 158, 255, 0.15);
+    background: rgba(255, 255, 255, 0.3);
+    border: 1px solid rgba(139, 158, 255, 0.2);
   }
 
   .nav-light .nav-btn {
     color: #475569;
-  }
-
-  .nav-light .nav-btn:hover {
-    background: rgba(255, 255, 255, 0.3);
-    color: #1E293B;
-  }
-
-  .nav-light .nav-btn.active {
-    background: rgba(255, 255, 255, 0.4);
-    color: #1E293B;
-    border-color: rgba(139, 158, 255, 0.1);
   }
 
   .nav-btn {
@@ -93,6 +85,28 @@ const { currentPath = '/', theme = 'dark' } = Astro.props;
     transition: all 0.4s ease;
     border: 1px solid transparent;
     letter-spacing: 0.02em;
+    transform: scale(1);
+  }
+
+  .nav-btn:hover {
+    transform: scale(1.05);
+  }
+
+  .nav-dark .nav-btn:hover {
+    background: rgba(255, 255, 255, 0.12);
+    color: #ffffff !important;
+    box-shadow: 0 0 20px rgba(56, 217, 217, 0.1);
+  }
+
+  .nav-light .nav-btn:hover {
+    background: rgba(255, 255, 255, 0.4);
+    color: #1E293B;
+  }
+
+  .nav-light .nav-btn.active {
+    background: rgba(255, 255, 255, 0.4);
+    color: #1E293B;
+    border-color: rgba(139, 158, 255, 0.1);
   }
 
   .nav-btn:focus-visible {
