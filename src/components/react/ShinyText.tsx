@@ -14,6 +14,11 @@ const ShinyText = ({
   direction = 'left',
   delay = 0
 }) => {
+  // Respect user's motion preference
+  const prefersReducedMotion = useRef(
+    typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  );
+
   const [isPaused, setIsPaused] = useState(false);
   const progress = useMotionValue(0);
   const elapsedRef = useRef(0);
@@ -24,7 +29,7 @@ const ShinyText = ({
   const delayDuration = delay * 1000;
 
   useAnimationFrame((time) => {
-    if (disabled || isPaused) {
+    if (disabled || isPaused || prefersReducedMotion.current) {
       lastTimeRef.current = null;
       return;
     }
