@@ -95,6 +95,11 @@ const { currentPath = '/', theme = 'dark' } = Astro.props;
     letter-spacing: 0.02em;
   }
 
+  .nav-btn:focus-visible {
+    outline: 2px solid #0E7490;
+    outline-offset: 2px;
+  }
+
   @media (max-width: 768px) {
     .blog-nav {
       padding: 1rem 1.25rem;

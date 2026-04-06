@@ -70,3 +70,50 @@ Extends `astro/tsconfigs/strict`. JSX is configured for React 19 with `jsxImport
 1. Create `src/pages/[page].astro` with frontmatter importing Layout
 2. Add React components with `client:load` for interactivity
 3. New routes are automatically included in sitemap.xml
+
+## Blog Section
+
+### Content Collection
+
+Blog posts are in `src/content/blog/` as MDX files with frontmatter:
+
+```yaml
+---
+title: Article Title
+description: Short description
+pubDate: 2026-04-06
+tags: ["Frontend", "Astro"]
+---
+```
+
+Schema is defined in `src/content.config.ts` using Astro's Content Layer API.
+
+### Routing
+
+- List page: `src/pages/blog/index.astro`
+- Detail page: `src/pages/blog/[slug].astro`
+
+**Important:** Use `post.id` (not `post.slug`) for routing. Astro v6's glob loader provides `id` which includes the file extension.
+
+### Blog Components
+
+- `BlogNav.astro` - Glass capsule nav with `theme` prop ('dark' | 'light')
+- `OrbBackground.tsx` - Canvas animation with breathing orbs (used in blog pages)
+- `Footer.astro` - Simple copyright footer
+
+### Design System (Blog)
+
+| Token | Value | Usage |
+|-------|-------|-------|
+| Background | `#F5F8FA` | Page background |
+| Primary | `#38D9D9` | Accent color (cyan) |
+| Link | `#0E7490` | Article links (WCAG AA) |
+| Text | `#1E293B` | Headlines |
+| Body | `#475569` | Body text |
+| Bold | `#F29719` | Strong emphasis |
+
+Glass cards use `backdrop-filter: blur(32px)` with `rgba(255,255,255,0.28)` background.
+
+### Tag Color System
+
+Tags use deterministic color assignment via `getTagColor(tag)` function (hash-based). No hardcoded per-tag CSS classes.
