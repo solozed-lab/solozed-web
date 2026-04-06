@@ -44,6 +44,7 @@ function getTagColor(tag: string) {
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   </head>
   <body>
     <OrbBackground client:load />
@@ -147,6 +148,12 @@ function getTagColor(tag: string) {
     color: #38D9D9;
   }
 
+  .back-link:focus-visible {
+    outline: 2px solid #0E7490;
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
   .article-meta {
     display: flex;
     align-items: center;
@@ -217,14 +224,20 @@ function getTagColor(tag: string) {
   }
 
   .article-content :global(a) {
-    color: #38D9D9;
+    color: #0E7490;
     text-decoration: none;
     border-bottom: 1px solid transparent;
     transition: border-color 0.3s ease;
   }
 
   .article-content :global(a:hover) {
-    border-bottom-color: #38D9D9;
+    border-bottom-color: #0E7490;
+  }
+
+  .article-content :global(a:focus-visible) {
+    outline: 2px solid #0E7490;
+    outline-offset: 2px;
+    border-radius: 2px;
   }
 
   .article-content :global(ul),
