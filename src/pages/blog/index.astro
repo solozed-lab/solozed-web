@@ -4,7 +4,9 @@ import BlogNav from '../../components/BlogNav.astro';
 import OrbBackground from '../../components/react/OrbBackground';
 import ShinyText from '../../components/react/ShinyText';
 import Footer from '../../components/Footer.astro';
+import { getTagColor } from '../../utils/tagColors';
 import '../../styles/global.css';
+import '../../styles/tokens.css';
 
 const posts = await getCollection('blog');
 const sortedPosts = posts.sort((a, b) =>
@@ -12,23 +14,6 @@ const sortedPosts = posts.sort((a, b) =>
 );
 
 const allTags = [...new Set(sortedPosts.flatMap(post => post.data.tags))];
-
-function getTagColor(tag: string) {
-  const colors = [
-    { bg: 'rgba(139, 92, 246, 0.07)', text: '#7C3AED' },
-    { bg: 'rgba(56, 189, 248, 0.07)', text: '#0284C7' },
-    { bg: 'rgba(59, 130, 246, 0.07)', text: '#2563EB' },
-    { bg: 'rgba(239, 68, 68, 0.07)', text: '#DC2626' },
-    { bg: 'rgba(34, 197, 94, 0.07)', text: '#16A34A' },
-    { bg: 'rgba(251, 191, 36, 0.07)', text: '#D97706' },
-    { bg: 'rgba(236, 72, 153, 0.07)', text: '#DB2777' },
-  ];
-  let hash = 0;
-  for (let i = 0; i < tag.length; i++) {
-    hash = tag.charCodeAt(i) + ((hash << 5) - hash);
-  }
-  return colors[Math.abs(hash) % colors.length];
-}
 ---
 
 <!DOCTYPE html>
@@ -43,17 +28,17 @@ function getTagColor(tag: string) {
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   </head>
   <body>
-    <OrbBackground client:load />
+    <OrbBackground client:idle />
     <BlogNav currentPath="/blog" theme="light" />
 
     <main class="main">
       <header class="header">
         <h1 class="header-title">
-          <ShinyText text="The Age of AI, the grace to be" speed={5} color="#1E293B" shineColor="#38D9D9" client:load />
+          <ShinyText text="The Age of AI, the grace to be" speed={5} color="#1E293B" shineColor="#38D9D9" client:idle />
         </h1>
       </header>
 
-      <div class="search-filter">
+      <div class="search-filter" role="search">
         <div class="search-box">
           <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <circle cx="11" cy="11" r="8"/>
@@ -89,6 +74,15 @@ function getTagColor(tag: string) {
           </article>
         ))}
       </div>
+
+      <div class="empty-state" id="emptyState" hidden>
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <circle cx="11" cy="11" r="8"/>
+          <path d="M21 21l-4.35-4.35"/>
+        </svg>
+        <p>No articles found</p>
+        <span>Try adjusting your search or filter</span>
+      </div>
     </main>
 
     <script>
@@ -112,10 +106,12 @@ function getTagColor(tag: string) {
           const matchesTag = activeTag === 'all' || tags.includes(activeTag);
           (card as HTMLElement).style.display = matchesTag ? '' : 'none';
         });
+        updateEmptyState();
       }
 
       // Search functionality
       const searchInput = document.getElementById('searchInput') as HTMLInputElement;
+      const emptyState = document.getElementById('emptyState') as HTMLElement;
       searchInput?.addEventListener('input', () => {
         const query = searchInput.value.toLowerCase();
         cards.forEach(card => {
@@ -124,7 +120,17 @@ function getTagColor(tag: string) {
           const matches = title.includes(query) || desc.includes(query);
           (card as HTMLElement).style.display = matches ? '' : 'none';
         });
+        updateEmptyState();
       });
+
+      function updateEmptyState() {
+        const visibleCards = Array.from(cards).filter(card =>
+          (card as HTMLElement).style.display !== 'none'
+        );
+        if (emptyState) {
+          emptyState.hidden = visibleCards.length > 0;
+        }
+      }
 
       // Card click navigation
       cards.forEach(card => {
@@ -309,6 +315,10 @@ function getTagColor(tag: string) {
       0 6px 12px rgba(0, 0, 0, 0.02);
   }
 
+  .card:active {
+    transform: scale(0.98);
+  }
+
   .card-meta {
     display: flex;
     align-items: center;
@@ -386,6 +396,36 @@ function getTagColor(tag: string) {
     transition: all 0.3s ease;
   }
 
+  .empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 2rem;
+    text-align: center;
+    color: #94A3B8;
+    gap: 0.75rem;
+  }
+
+  .empty-state svg {
+    opacity: 0.4;
+    margin-bottom: 0.5rem;
+  }
+
+  .empty-state p {
+    font-size: 1.125rem;
+    font-weight: 500;
+    color: #475569;
+  }
+
+  .empty-state span {
+    font-size: 0.875rem;
+  }
+
+  .empty-state[hidden] {
+    display: none;
+  }
+
   @media (max-width: 768px) {
     .card-grid {
       grid-template-columns: 1fr;
@@ -399,6 +439,69 @@ function getTagColor(tag: string) {
     .search-filter {
       gap: 0.875rem;
       margin-bottom: 2.5rem;
+    }
+
+    .card {
+      padding: 1.5rem;
+    }
+
+    .header-title {
+      font-size: 1.5rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .main {
+      padding: 5rem 1rem 4rem;
+    }
+
+    .card {
+      padding: 1.25rem;
+      border-radius: 16px;
+    }
+
+    .card-title {
+      font-size: 1rem;
+    }
+
+    .card-desc {
+      font-size: 0.9375rem;
+      -webkit-line-clamp: 2;
+    }
+
+    .search-input {
+      padding: 0.75rem 1rem 0.75rem 2.5rem;
+      font-size: 0.8125rem;
+    }
+
+    .tag-filter-btn {
+      padding: 0.375rem 0.75rem;
+      font-size: 0.625rem;
+    }
+
+    .empty-state {
+      padding: 3rem 1rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .header,
+    .search-filter,
+    .card {
+      animation: none;
+      opacity: 1;
+    }
+
+    .card:hover {
+      transform: none;
+    }
+
+    .search-input,
+    .tag-filter-btn,
+    .tag,
+    .card,
+    .card-title {
+      transition: none;
     }
   }
 </style>

@@ -7,7 +7,7 @@ interface Props {
 const { currentPath = '/', theme = 'dark' } = Astro.props;
 ---
 
-<nav class={`blog-nav nav-${theme}`}>
+<nav class={`blog-nav nav-${theme}`} aria-label="Blog navigation">
   <div class="nav-glass">
     <a href="/" class:list={['nav-btn', { active: currentPath === '/' }]} style={theme === 'dark' ? 'color:rgba(255,255,255,0.85)' : 'color:#475569'}>Home</a>
     <a href="/blog" class:list={['nav-btn', { active: currentPath === '/blog' }]} style={theme === 'dark' ? 'color:rgba(255,255,255,0.85)' : 'color:#475569'}>Blog</a>

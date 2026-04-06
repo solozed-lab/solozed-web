@@ -29,6 +29,18 @@ export default function OrbBackground() {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
+    // Respect user's motion preference
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (mediaQuery.matches) return;
+
+    const handleMotionPreference = (e: MediaQueryListEvent) => {
+      if (e.matches) {
+        // User prefers reduced motion - stop animation will happen on next render when component remounts
+        cancelAnimationFrame(animationId);
+      }
+    };
+    mediaQuery.addEventListener('change', handleMotionPreference);
+
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
@@ -170,6 +182,7 @@ export default function OrbBackground() {
 
     return () => {
       cancelAnimationFrame(animationId);
+      mediaQuery.removeEventListener('change', handleMotionPreference);
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseleave', handleMouseLeave);
       window.removeEventListener('touchmove', handleTouchMove);
@@ -181,6 +194,7 @@ export default function OrbBackground() {
   return (
     <canvas
       ref={canvasRef}
+      aria-hidden="true"
       style={{
         position: 'fixed',
         inset: 0,
