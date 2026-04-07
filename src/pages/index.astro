@@ -53,6 +53,71 @@ import '../styles/global.css';
   </main>
 
   <footer class="footer">
-    &copy; 2026 solozed. All rights reserved.
+    <div class="contact-links">
+      <a href="mailto:i@solozed.com" class="contact-link" aria-label="Email">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+      </a>
+      <a href="https://x.com/XianlaiSolo" target="_blank" rel="noopener noreferrer" class="contact-link" aria-label="X (Twitter)">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+      </a>
+      <a href="https://solozed.medium.com" target="_blank" rel="noopener noreferrer" class="contact-link" aria-label="Medium">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 1024 1024">
+          <path fill="currentColor" d="M834.7 279.8l61.3-58.9V208H683.7L532.4 586.4 360.3 208H137.7v12.9l71.6 86.6c7 6.4 10.6 15.8 9.7 25.2V673c2.2 12.3-1.7 24.8-10.3 33.7L128 805v12.7h228.6v-12.9l-80.6-98c-8.7-8.9-12.9-21.3-11.1-33.7V378.7l200.7 439.2h23.3l172.6-439.2v349.9c0 9.2 0 11.1-6 17.2l-62.1 60.3V819h301.2v-12.9l-59.9-58.9c-5.2-4-7.9-10.7-6.8-17.2V297c-1.1-6.5 1.6-13.2 6.8-17.2z"/>
+        </svg>
+      </a>
+      <a href="https://www.youtube.com/@solozedflow" target="_blank" rel="noopener noreferrer" class="contact-link" aria-label="YouTube">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+      </a>
+    </div>
+    <p>&copy; 2026 solozed. All rights reserved.</p>
   </footer>
 </Layout>
+
+<style>
+  .footer {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    padding: 2rem;
+    font-size: 0.8125rem;
+    color: rgba(192, 192, 192, 0.5);
+    letter-spacing: 0.05em;
+  }
+
+  .footer p {
+    margin: 0;
+  }
+
+  .contact-links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.25rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .contact-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    color: rgba(192, 192, 192, 0.6);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .contact-link svg,
+  .contact-link img {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+  }
+
+  .contact-link:hover {
+    color: rgba(192, 192, 192, 1);
+  }
+
+  .divider {
+    color: rgba(192, 192, 192, 0.3);
+  }
+</style>
