@@ -63,7 +63,7 @@ const allTags = [...new Set(sortedPosts.flatMap(post => post.data.tags))];
               <span class="card-reading-time">{Math.ceil(post.body.replace(/\s/g, '').length / 400)} min</span>
             </div>
             <h2 class="card-title">
-              <a href={`/blog/${post.id}`}>{post.data.title}</a>
+              <a href={`/blog/${post.id.replace(/\.(md|mdx)$/, '')}`}>{post.data.title}</a>
             </h2>
             <p class="card-desc">{post.data.description}</p>
             <div class="tags">
