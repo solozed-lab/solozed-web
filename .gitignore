@@ -22,3 +22,7 @@ npm-debug.log*
 .idea/
 *.swp
 *.swo
+
+# Local dev state
+.omc/
+test-results/
