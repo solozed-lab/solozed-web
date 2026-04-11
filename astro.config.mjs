@@ -4,7 +4,10 @@ import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
 import mdx from '@astrojs/mdx';
 
+import cloudflare from '@astrojs/cloudflare';
+
 export default defineConfig({
   site: 'https://solozed.com',
   integrations: [react(), sitemap(), mdx()],
+  adapter: cloudflare(),
 });
