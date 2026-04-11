@@ -117,3 +117,10 @@ Glass cards use `backdrop-filter: blur(32px)` with `rgba(255,255,255,0.28)` back
 ### Tag Color System
 
 Tags use deterministic color assignment via `getTagColor(tag)` function (hash-based). No hardcoded per-tag CSS classes.
+
+## Git Workflow
+
+- **Never modify `main` directly.** All feature development and bug fixes must happen in a separate branch.
+- Before making any changes, create a new branch from `main` (e.g. `feat/your-feature`, `fix/your-issue`).
+- After the change is complete and verified, merge it back into `main`.
+- Delete the branch after merging.
