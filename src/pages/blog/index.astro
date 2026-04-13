@@ -77,7 +77,7 @@ const blogSchema = {
           <div class="card-meta">
             <time class="card-date">{post.data.pubDate.toISOString().split('T')[0]}</time>
             <span class="card-dot"></span>
-            <span class="card-reading-time">{readingTime(post.body)} min</span>
+            <span class="card-reading-time">{readingTime(post.body)} min read</span>
           </div>
           <h2 class="card-title">
             <a href={`/blog/${post.id.replace(/\.(md|mdx)$/, '')}`}>{post.data.title}</a>
