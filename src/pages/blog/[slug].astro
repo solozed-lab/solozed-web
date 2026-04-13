@@ -1,5 +1,6 @@
 ---
 import { getCollection, render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
 import BlogNav from '../../components/BlogNav.astro';
 import OrbBackground from '../../components/react/OrbBackground';
 import Footer from '../../components/Footer.astro';
@@ -9,13 +10,15 @@ import ArrowRight from '../../components/react/ArrowRight';
 import '../../styles/global.css';
 import '../../styles/tokens.css';
 
+const siteUrl = 'https://solozed.com';
+
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
   const sorted = posts.sort((a, b) =>
     b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
   );
   return sorted.map((post, i) => ({
-    params: { slug: post.id.replace(/\.(md|mdx)$/, '') },
+    params: { slug: post.id.replace(/\.(md|mdx)$/, '',) },
     props: { post, prev: sorted[i + 1] ?? null, next: sorted[i - 1] ?? null },
   }));
 }
@@ -23,145 +26,128 @@ export async function getStaticPaths() {
 const { post, prev, next } = Astro.props;
 const { Content } = await render(post);
 
-const siteUrl = 'https://solozed.com';
 const slug = post.id.replace(/\.(md|mdx)$/, '');
 const canonicalUrl = `${siteUrl}/blog/${slug}`;
 const image = post.data.image ?? '/og-default.svg';
+
 function readingTime(body: string) {
   const chars = body.replace(/[#*`>\[\]!|]/g, '').replace(/\s/g, '').length;
   return Math.max(1, Math.ceil(chars / 400));
 }
+
 const timeToRead = readingTime(post.body);
+
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": post.data.title,
+  "description": post.data.description,
+  "datePublished": post.data.pubDate.toISOString(),
+  "dateModified": (post.data.updatedDate ?? post.data.pubDate).toISOString(),
+  "wordCount": post.body.replace(/[#*`>\[\]!|]/g, '').replace(/\s/g, '').length,
+  "timeToRead": timeToRead,
+  "url": canonicalUrl,
+  "author": {
+    "@type": "Person",
+    "name": "solozed",
+    "url": siteUrl
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "solozed",
+    "url": siteUrl,
+    "logo": {
+      "@type": "ImageObject",
+      "url": `${siteUrl}/favicon.svg`
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": canonicalUrl
+  }
+};
 ---
 
-<!DOCTYPE html>
-<html lang="zh-CN">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="generator" content={Astro.generator} />
-
-    <!-- SEO -->
-    <title>{post.data.title} - Solozed</title>
-    <meta name="description" content={post.data.description} />
-    <meta name="author" content="solozed" />
-    <meta name="robots" content="index, follow" />
-    <link rel="canonical" href={canonicalUrl} />
-
-    <!-- Open Graph -->
+<Layout
+  title={`${post.data.title} - Solozed`}
+  description={post.data.description}
+  pathname={`/blog/${slug}`}
+  image={image}
+>
+  <Fragment slot="head">
     <meta property="og:type" content="article" />
     <meta property="og:url" content={canonicalUrl} />
-    <meta property="og:title" content={post.data.title} />
-    <meta property="og:description" content={post.data.description} />
-    <meta property="og:site_name" content="solozed" />
-    <meta property="og:locale" content="zh_CN" />
-    <meta property="og:image" content={`${siteUrl}${image}`} />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
     <meta property="article:published_time" content={post.data.pubDate.toISOString()} />
+    {post.data.updatedDate && (
+      <meta property="article:modified_time" content={post.data.updatedDate.toISOString()} />
+    )}
+    <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+  </Fragment>
 
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={post.data.title} />
-    <meta name="twitter:description" content={post.data.description} />
-    <meta name="twitter:image" content={`${siteUrl}${image}`} />
+  <OrbBackground client:idle />
+  <BlogNav currentPath="/blog" theme="light" />
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-
-    <!-- Structured Data -->
-    <script type="application/ld+json" set:html={JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "Article",
-      "headline": post.data.title,
-      "description": post.data.description,
-      "datePublished": post.data.pubDate.toISOString(),
-      "dateModified": post.data.pubDate.toISOString(),
-      "wordCount": post.body.replace(/[#*`>\[\]!|]/g, '').replace(/\s/g, '').length,
-      "timeToRead": timeToRead,
-      "url": canonicalUrl,
-      "author": {
-        "@type": "Person",
-        "name": "solozed",
-        "url": siteUrl
-      },
-      "publisher": {
-        "@type": "Organization",
-        "name": "solozed",
-        "url": siteUrl,
-        "logo": {
-          "@type": "ImageObject",
-          "url": `${siteUrl}/favicon.svg`
-        }
-      },
-      "mainEntityOfPage": {
-        "@type": "WebPage",
-        "@id": canonicalUrl
-      }
-    })} />
-  </head>
-  <body>
-    <OrbBackground client:idle />
-    <BlogNav currentPath="/blog" theme="light" />
-
-    <main class="main">
-      <article class="article">
-        <header class="article-header">
-          <a href="/blog" class="back-link">
-            <ArrowLeft />
-            Back to Blog
-          </a>
-          <div class="article-meta">
-            <time class="article-date">{post.data.pubDate.toISOString().split('T')[0]}</time>
-            <span class="article-dot"></span>
-            <span class="article-reading-time">{timeToRead} min read</span>
-          </div>
-          <h1 class="article-title">{post.data.title}</h1>
-          <div class="tags">
-            {post.data.tags.map(tag => (
-              <span class="tag" style={`background: ${getTagColor(tag).bg}; color: ${getTagColor(tag).text}`}>{tag}</span>
-            ))}
-          </div>
-        </header>
-
-        <div class="article-content">
-          <Content />
-        </div>
-
-        <footer class="article-footer">
-          {(prev || next) && (
-            <nav class="article-nav" aria-label="Article navigation">
-              <div class="nav-prev">
-                {prev && (
-                  <a href={`/blog/${prev.id.replace(/\.(md|mdx)$/, '')}`} class="nav-link">
-                    <span class="nav-label"><ArrowLeft /> Previous</span>
-                    <span class="nav-title">{prev.data.title}</span>
-                  </a>
-                )}
-              </div>
-              <div class="nav-next">
-                {next && (
-                  <a href={`/blog/${next.id.replace(/\.(md|mdx)$/, '')}`} class="nav-link">
-                    <span class="nav-label">Next <ArrowRight /></span>
-                    <span class="nav-title">{next.data.title}</span>
-                  </a>
-                )}
-              </div>
-            </nav>
+  <main class="main">
+    <article class="article">
+      <header class="article-header">
+        <a href="/blog" class="back-link">
+          <ArrowLeft />
+          Back to Blog
+        </a>
+        <div class="article-meta">
+          <time class="article-date">{post.data.pubDate.toISOString().split('T')[0]}</time>
+          <span class="article-dot"></span>
+          <span class="article-reading-time">{timeToRead} min read</span>
+          {post.data.updatedDate && (
+            <>
+              <span class="article-dot"></span>
+              <span class="article-updated">Updated {post.data.updatedDate.toISOString().split('T')[0]}</span>
+            </>
           )}
-          <a href="/blog" class="back-link">
-            <ArrowLeft />
-            Back to Blog
-          </a>
-        </footer>
-      </article>
-    </main>
-    <Footer />
-  </body>
-</html>
+        </div>
+        <h1 class="article-title">{post.data.title}</h1>
+        <div class="tags">
+          {post.data.tags.map(tag => (
+            <span class="tag" style={`background: ${getTagColor(tag).bg}; color: ${getTagColor(tag).text}`}>{tag}</span>
+          ))}
+        </div>
+      </header>
+
+      <div class="article-content">
+        <Content />
+      </div>
+
+      <footer class="article-footer">
+        {(prev || next) && (
+          <nav class="article-nav" aria-label="Article navigation">
+            <div class="nav-prev">
+              {prev && (
+                <a href={`/blog/${prev.id.replace(/\.(md|mdx)$/, '')}`} class="nav-link">
+                  <span class="nav-label"><ArrowLeft /> Previous</span>
+                  <span class="nav-title">{prev.data.title}</span>
+                </a>
+              )}
+            </div>
+            <div class="nav-next">
+              {next && (
+                <a href={`/blog/${next.id.replace(/\.(md|mdx)$/, '')}`} class="nav-link">
+                  <span class="nav-label">Next <ArrowRight /></span>
+                  <span class="nav-title">{next.data.title}</span>
+                </a>
+              )}
+            </div>
+          </nav>
+        )}
+        <a href="/blog" class="back-link">
+          <ArrowLeft />
+          Back to Blog
+        </a>
+      </footer>
+    </article>
+  </main>
+
+  <Footer />
+</Layout>
 
 <style>
   :global(body) {
@@ -232,6 +218,7 @@ const timeToRead = readingTime(post.body);
     align-items: center;
     gap: var(--space-4);
     margin-bottom: var(--space-4);
+    flex-wrap: wrap;
   }
 
   .article-date {
@@ -248,10 +235,15 @@ const timeToRead = readingTime(post.body);
     opacity: 0.5;
   }
 
-  .article-reading-time {
+  .article-reading-time,
+  .article-updated {
     font-size: var(--font-size-sm);
     color: var(--color-text-tertiary);
     letter-spacing: var(--letter-spacing-wider);
+  }
+
+  .article-updated {
+    color: var(--color-text-link);
   }
 
   .article-title {

@@ -1,5 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
 import BlogNav from '../../components/BlogNav.astro';
 import OrbBackground from '../../components/react/OrbBackground';
 import ShinyText from '../../components/react/ShinyText';
@@ -7,6 +8,8 @@ import Footer from '../../components/Footer.astro';
 import { getTagColor } from '../../utils/tagColors';
 import '../../styles/global.css';
 import '../../styles/tokens.css';
+
+const siteUrl = 'https://solozed.com';
 
 const posts = await getCollection('blog');
 const sortedPosts = posts.sort((a, b) =>
@@ -19,175 +22,151 @@ function readingTime(body: string) {
   const chars = body.replace(/[#*`>\[\]!|]/g, '').replace(/\s/g, '').length;
   return Math.max(1, Math.ceil(chars / 400));
 }
+
+const blogSchema = {
+  "@context": "https://schema.org",
+  "@type": "Blog",
+  "name": "solozed Blog",
+  "description": "在AI时代，solozed探索技术与生活的从容之道。",
+  "url": `${siteUrl}/blog`,
+  "inLanguage": "zh-CN",
+  "publisher": {
+    "@type": "Organization",
+    "name": "solozed",
+    "url": siteUrl
+  }
+};
 ---
 
-<!DOCTYPE html>
-<html lang="zh-CN">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="generator" content={Astro.generator} />
+<Layout
+  title="Blog - Solozed | AI时代，值得更加从容"
+  description="在AI时代，solozed探索技术与生活的从容之道。每篇文章都是一次关于初心、技术与生活的深度思考。"
+  pathname="/blog"
+>
+  <Fragment slot="head">
+    <meta property="og:image" content={`${siteUrl}/og-default.svg`} />
+    <meta name="twitter:image" content={`${siteUrl}/og-default.svg`} />
+    <script type="application/ld+json" set:html={JSON.stringify(blogSchema)} />
+  </Fragment>
 
-    <!-- SEO -->
-    <title>Blog - Solozed | AI时代，值得更加从容</title>
-    <meta name="description" content="在AI时代，solozed探索技术与生活的从容之道。每篇文章都是一次关于初心、技术与生活的深度思考。" />
-    <meta name="keywords" content="AI时代,人工智能,从容,AI生活,技术从容,solozed,博客,思考" />
-    <meta name="author" content="solozed" />
-    <meta name="robots" content="index, follow" />
-    <link rel="canonical" href="https://solozed.com/blog" />
+  <OrbBackground client:idle />
+  <BlogNav currentPath="/blog" theme="light" />
 
-    <!-- Open Graph -->
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://solozed.com/blog" />
-    <meta property="og:title" content="Blog - Solozed | AI时代，值得更加从容" />
-    <meta property="og:description" content="在AI时代，solozed探索技术与生活的从容之道。每篇文章都是一次关于初心、技术与生活的深度思考。" />
-    <meta property="og:site_name" content="solozed" />
-    <meta property="og:locale" content="zh_CN" />
+  <main class="main">
+    <header class="header">
+      <h1 class="header-title">
+        <ShinyText text="The Age of AI, the grace to be" speed={5} color="#1E293B" shineColor="#38D9D9" client:idle />
+      </h1>
+    </header>
 
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Blog - Solozed | AI时代，值得更加从容" />
-    <meta name="twitter:description" content="在AI时代，solozed探索技术与生活的从容之道。每篇文章都是一次关于初心、技术与生活的深度思考。" />
-
-    <!-- Structured Data -->
-    <script type="application/ld+json" set:html={JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "Blog",
-      "name": "solozed Blog",
-      "description": "在AI时代，solozed探索技术与生活的从容之道。",
-      "url": "https://solozed.com/blog",
-      "inLanguage": "zh-CN",
-      "publisher": {
-        "@type": "Organization",
-        "name": "solozed",
-        "url": "https://solozed.com"
-      }
-    })} />
-
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  </head>
-  <body>
-    <OrbBackground client:idle />
-    <BlogNav currentPath="/blog" theme="light" />
-
-    <main class="main">
-      <header class="header">
-        <h1 class="header-title">
-          <ShinyText text="The Age of AI, the grace to be" speed={5} color="#1E293B" shineColor="#38D9D9" client:idle />
-        </h1>
-      </header>
-
-      <div class="search-filter" role="search">
-        <div class="tag-filters" role="group" aria-label="Filter by tag">
-          <button class="tag-filter-btn active" data-tag="all">All</button>
-          {allTags.map(tag => (
-            <button class="tag-filter-btn" data-tag={tag}>{tag}</button>
-          ))}
-        </div>
-        <div class="search-box">
-          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="11" cy="11" r="8"/>
-            <path d="M21 21l-4.35-4.35"/>
-          </svg>
-          <input type="text" class="search-input" placeholder="Search articles..." id="searchInput" />
-        </div>
-      </div>
-
-      <div class="card-grid" id="cardGrid">
-        {sortedPosts.map((post, index) => (
-          <article class="card" data-tags={JSON.stringify(post.data.tags)} style={`animation-delay: ${0.4 + index * 0.1}s`}>
-            <div class="card-meta">
-              <time class="card-date">{post.data.pubDate.toISOString().split('T')[0]}</time>
-              <span class="card-dot"></span>
-              <span class="card-reading-time">{readingTime(post.body)} min</span>
-            </div>
-            <h2 class="card-title">
-              <a href={`/blog/${post.id.replace(/\.(md|mdx)$/, '')}`}>{post.data.title}</a>
-            </h2>
-            <p class="card-desc">{post.data.description}</p>
-            <div class="tags">
-              {post.data.tags.map(tag => (
-                <span class="tag" style={`background: ${getTagColor(tag).bg}; color: ${getTagColor(tag).text}`}>{tag}</span>
-              ))}
-            </div>
-          </article>
+    <div class="search-filter" role="search">
+      <div class="tag-filters" role="group" aria-label="Filter by tag">
+        <button class="tag-filter-btn active" data-tag="all">All</button>
+        {allTags.map(tag => (
+          <button class="tag-filter-btn" data-tag={tag}>{tag}</button>
         ))}
       </div>
-
-      <div class="empty-state" id="emptyState" hidden>
-        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+      <div class="search-box">
+        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <circle cx="11" cy="11" r="8"/>
           <path d="M21 21l-4.35-4.35"/>
         </svg>
-        <p>No articles found</p>
-        <span>Try adjusting your search or filter</span>
+        <input type="text" class="search-input" placeholder="Search articles..." id="searchInput" />
       </div>
-    </main>
+    </div>
 
-    <script>
-      // Tag filter functionality
-      const tagButtons = document.querySelectorAll('.tag-filter-btn');
-      const cards = document.querySelectorAll('.card');
-      let activeTag = 'all';
+    <div class="card-grid" id="cardGrid">
+      {sortedPosts.map((post, index) => (
+        <article class="card" data-tags={JSON.stringify(post.data.tags)} style={`animation-delay: ${0.4 + index * 0.1}s`}>
+          <div class="card-meta">
+            <time class="card-date">{post.data.pubDate.toISOString().split('T')[0]}</time>
+            <span class="card-dot"></span>
+            <span class="card-reading-time">{readingTime(post.body)} min</span>
+          </div>
+          <h2 class="card-title">
+            <a href={`/blog/${post.id.replace(/\.(md|mdx)$/, '')}`}>{post.data.title}</a>
+          </h2>
+          <p class="card-desc">{post.data.description}</p>
+          <div class="tags">
+            {post.data.tags.map(tag => (
+              <span class="tag" style={`background: ${getTagColor(tag).bg}; color: ${getTagColor(tag).text}`}>{tag}</span>
+            ))}
+          </div>
+        </article>
+      ))}
+    </div>
 
-      tagButtons.forEach(btn => {
-        btn.addEventListener('click', () => {
-          activeTag = btn.getAttribute('data-tag') || 'all';
-          tagButtons.forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
-          filterCards();
-        });
+    <div class="empty-state" id="emptyState" hidden>
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <circle cx="11" cy="11" r="8"/>
+        <path d="M21 21l-4.35-4.35"/>
+      </svg>
+      <p>No articles found</p>
+      <span>Try adjusting your search or filter</span>
+    </div>
+  </main>
+
+  <Footer />
+
+  <script>
+    // Tag filter functionality
+    const tagButtons = document.querySelectorAll('.tag-filter-btn');
+    const cards = document.querySelectorAll('.card');
+    let activeTag = 'all';
+
+    tagButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        activeTag = btn.getAttribute('data-tag') || 'all';
+        tagButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        filterCards();
       });
+    });
 
-      function filterCards() {
-        cards.forEach(card => {
-          const tags = JSON.parse(card.getAttribute('data-tags') || '[]');
-          const matchesTag = activeTag === 'all' || tags.includes(activeTag);
-          (card as HTMLElement).style.display = matchesTag ? '' : 'none';
-        });
-        updateEmptyState();
-      }
-
-      // Search functionality
-      const searchInput = document.getElementById('searchInput') as HTMLInputElement;
-      const emptyState = document.getElementById('emptyState') as HTMLElement;
-      searchInput?.addEventListener('input', () => {
-        const query = searchInput.value.toLowerCase();
-        cards.forEach(card => {
-          const title = card.querySelector('.card-title')?.textContent?.toLowerCase() || '';
-          const desc = card.querySelector('.card-desc')?.textContent?.toLowerCase() || '';
-          const matches = title.includes(query) || desc.includes(query);
-          (card as HTMLElement).style.display = matches ? '' : 'none';
-        });
-        updateEmptyState();
-      });
-
-      function updateEmptyState() {
-        const visibleCards = Array.from(cards).filter(card =>
-          (card as HTMLElement).style.display !== 'none'
-        );
-        if (emptyState) {
-          emptyState.hidden = visibleCards.length > 0;
-        }
-      }
-
-      // Card click navigation
+    function filterCards() {
       cards.forEach(card => {
-        card.addEventListener('click', (e) => {
-          const link = card.querySelector('.card-title a') as HTMLAnchorElement;
-          if (link && !e.defaultPrevented) {
-            window.location.href = link.href;
-          }
-        });
-        card.style.cursor = 'pointer';
+        const tags = JSON.parse(card.getAttribute('data-tags') || '[]');
+        const matchesTag = activeTag === 'all' || tags.includes(activeTag);
+        (card as HTMLElement).style.display = matchesTag ? '' : 'none';
       });
-    </script>
-    <Footer />
-  </body>
-</html>
+      updateEmptyState();
+    }
+
+    // Search functionality
+    const searchInput = document.getElementById('searchInput') as HTMLInputElement;
+    const emptyState = document.getElementById('emptyState') as HTMLElement;
+    searchInput?.addEventListener('input', () => {
+      const query = searchInput.value.toLowerCase();
+      cards.forEach(card => {
+        const title = card.querySelector('.card-title')?.textContent?.toLowerCase() || '';
+        const desc = card.querySelector('.card-desc')?.textContent?.toLowerCase() || '';
+        const matches = title.includes(query) || desc.includes(query);
+        (card as HTMLElement).style.display = matches ? '' : 'none';
+      });
+      updateEmptyState();
+    });
+
+    function updateEmptyState() {
+      const visibleCards = Array.from(cards).filter(card =>
+        (card as HTMLElement).style.display !== 'none'
+      );
+      if (emptyState) {
+        emptyState.hidden = visibleCards.length > 0;
+      }
+    }
+
+    // Card click navigation
+    cards.forEach(card => {
+      card.addEventListener('click', (e) => {
+        const link = card.querySelector('.card-title a') as HTMLAnchorElement;
+        if (link && !e.defaultPrevented) {
+          window.location.href = link.href;
+        }
+      });
+      card.style.cursor = 'pointer';
+    });
+  </script>
+</Layout>
 
 <style>
   :global(body) {
@@ -485,4 +464,3 @@ function readingTime(body: string) {
     .card, .header, .search-filter { animation: none; opacity: 1; }
   }
 </style>
-

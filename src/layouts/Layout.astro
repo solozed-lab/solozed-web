@@ -104,6 +104,9 @@ const canonicalUrl = `${siteUrl}${pathname}`;
         "https://github.com/solozed-lab"
       ]
     })} />
+
+    <!-- Page-specific head content (structured data, og:image overrides, etc.) -->
+    <slot name="head" />
   </head>
   <body>
     <a href="#main-content" class="skip-link">Skip to content</a>
