@@ -1,7 +1,11 @@
 User-agent: *
 Allow: /
 
-User-agent: GPTBot
+User-agent: *
 Disallow:
 
-Sitemap: https://solozed.com/sitemap.xml
+# Sitemap
+Sitemap: https://solozed.com/sitemap-index.xml
+
+# Crawl-delay (polite)
+Crawl-delay: 10

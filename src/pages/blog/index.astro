@@ -17,11 +17,48 @@ const allTags = [...new Set(sortedPosts.flatMap(post => post.data.tags))];
 ---
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Blog - Solozed</title>
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- SEO -->
+    <title>Blog - Solozed | AI时代，值得更加从容</title>
+    <meta name="description" content="在AI时代，solozed探索技术与生活的从容之道。每篇文章都是一次关于初心、技术与生活的深度思考。" />
+    <meta name="keywords" content="AI时代,人工智能,从容,AI生活,技术从容,solozed,博客,思考" />
+    <meta name="author" content="solozed" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://solozed.com/blog" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://solozed.com/blog" />
+    <meta property="og:title" content="Blog - Solozed | AI时代，值得更加从容" />
+    <meta property="og:description" content="在AI时代，solozed探索技术与生活的从容之道。每篇文章都是一次关于初心、技术与生活的深度思考。" />
+    <meta property="og:site_name" content="solozed" />
+    <meta property="og:locale" content="zh_CN" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Blog - Solozed | AI时代，值得更加从容" />
+    <meta name="twitter:description" content="在AI时代，solozed探索技术与生活的从容之道。每篇文章都是一次关于初心、技术与生活的深度思考。" />
+
+    <!-- Structured Data -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Blog",
+      "name": "solozed Blog",
+      "description": "在AI时代，solozed探索技术与生活的从容之道。",
+      "url": "https://solozed.com/blog",
+      "inLanguage": "zh-CN",
+      "publisher": {
+        "@type": "Organization",
+        "name": "solozed",
+        "url": "https://solozed.com"
+      }
+    })} />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />

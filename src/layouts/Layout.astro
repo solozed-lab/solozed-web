@@ -45,12 +45,8 @@ const canonicalUrl = `${siteUrl}${pathname}`;
 
     <!-- GEO / 地域标签 -->
     <meta name="geo.region" content="CN" />
-    <meta name="geo.placename" content="solozed" />
-    <meta name="geo.position" content="39.9042;116.4074" />
-    <meta name="ICBM" content="39.9042, 116.4074" />
 
     <!-- Baidu -->
-    <meta name="baidu-site-verification" content="" />
     <meta name="baidu-site-verification" content="" />
 
     <!-- Sogou -->
@@ -66,6 +62,9 @@ const canonicalUrl = `${siteUrl}${pathname}`;
     <link rel="alternate" hreflang="zh-Hans" href={canonicalUrl} />
     <link rel="alternate" hreflang="en" href={canonicalUrl} />
     <link rel="alternate" hreflang="x-default" href={canonicalUrl} />
+
+    <!-- RSS Feed -->
+    <link rel="alternate" type="application/rss+xml" title="solozed RSS Feed" href="/rss.xml" />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -91,6 +90,10 @@ const canonicalUrl = `${siteUrl}${pathname}`;
       "name": "solozed",
       "url": siteUrl,
       "description": description,
+      "logo": {
+        "@type": "ImageObject",
+        "url": `${siteUrl}/favicon.svg`
+      },
       "sameAs": []
     })} />
   </head>

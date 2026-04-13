@@ -18,33 +18,76 @@ export async function getStaticPaths() {
 
 const { post } = Astro.props;
 const { Content } = await render(post);
+
+const siteUrl = 'https://solozed.com';
+const slug = post.id.replace(/\.(md|mdx)$/, '');
+const canonicalUrl = `${siteUrl}/blog/${slug}`;
+const wordCount = post.body.replace(/\s/g, '').length;
+const timeToRead = Math.ceil(wordCount / 400);
 ---
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- SEO -->
     <title>{post.data.title} - Solozed</title>
     <meta name="description" content={post.data.description} />
+    <meta name="author" content="solozed" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href={canonicalUrl} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:title" content={post.data.title} />
+    <meta property="og:description" content={post.data.description} />
+    <meta property="og:site_name" content="solozed" />
+    <meta property="og:locale" content="zh_CN" />
+    <meta property="article:published_time" content={post.data.pubDate.toISOString()} />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={post.data.title} />
+    <meta name="twitter:description" content={post.data.description} />
+
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Structured Data -->
     <script type="application/ld+json" set:html={JSON.stringify({
       "@context": "https://schema.org",
       "@type": "Article",
       "headline": post.data.title,
       "description": post.data.description,
       "datePublished": post.data.pubDate.toISOString(),
+      "dateModified": post.data.pubDate.toISOString(),
+      "wordCount": wordCount,
+      "timeToRead": timeToRead,
+      "url": canonicalUrl,
       "author": {
         "@type": "Person",
-        "name": "solozed"
+        "name": "solozed",
+        "url": siteUrl
       },
       "publisher": {
         "@type": "Organization",
         "name": "solozed",
-        "url": "https://solozed.com"
+        "url": siteUrl,
+        "logo": {
+          "@type": "ImageObject",
+          "url": `${siteUrl}/favicon.svg`
+        }
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": canonicalUrl
       }
     })} />
   </head>
