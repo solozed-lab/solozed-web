@@ -5,12 +5,13 @@ import BlogNav from '../../components/BlogNav.astro';
 import OrbBackground from '../../components/react/OrbBackground';
 import Footer from '../../components/Footer.astro';
 import { getTagColor } from '../../utils/tagColors';
+import { readingTime } from '../../utils/readingTime';
 import ArrowLeft from '../../components/react/ArrowLeft';
 import ArrowRight from '../../components/react/ArrowRight';
 import '../../styles/global.css';
 import '../../styles/tokens.css';
 
-const siteUrl = 'https://solozed.com';
+const siteUrl = Astro.site?.toString() ?? '';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
@@ -29,11 +30,6 @@ const { Content } = await render(post);
 const slug = post.id.replace(/\.(md|mdx)$/, '');
 const canonicalUrl = `${siteUrl}/blog/${slug}`;
 const image = post.data.image ?? '/og-default.svg';
-
-function readingTime(body: string) {
-  const chars = body.replace(/[#*`>\[\]!|]/g, '').replace(/\s/g, '').length;
-  return Math.max(1, Math.ceil(chars / 400));
-}
 
 const timeToRead = readingTime(post.body);
 

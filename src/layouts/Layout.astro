@@ -12,7 +12,7 @@ const {
   image = '/og-default.svg',
 } = Astro.props;
 
-const siteUrl = 'https://solozed.com';
+const siteUrl = Astro.site?.toString() ?? 'https://solozed.com';
 const canonicalUrl = `${siteUrl}${pathname}`;
 ---
 <!doctype html>
@@ -59,7 +59,6 @@ const canonicalUrl = `${siteUrl}${pathname}`;
     <meta name="sogou_site_verification" content="TfzCMoBamq" />
 
     <!-- Naver -->
-    <meta name="naver-site-verification" content="" />
 
     <!-- Google Search Console: domain DNS verified, no meta tag needed -->
 
