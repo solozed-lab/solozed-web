@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a0a0f"/>
+      <stop offset="100%" stop-color="#111118"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="30%" cy="40%" r="50%">
+      <stop offset="0%" stop-color="#38D9D9" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#38D9D9" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+  <text
+    x="600" y="310"
+    font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
+    font-size="96"
+    font-weight="800"
+    fill="#e0e0e0"
+    text-anchor="middle"
+    letter-spacing="-0.03em"
+  >solozed</text>
+  <text
+    x="600" y="380"
+    font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
+    font-size="28"
+    font-weight="400"
+    fill="#94A3B8"
+    text-anchor="middle"
+    letter-spacing="0.05em"
+  >The Age of AI, the grace to be</text>
+  <circle cx="600" cy="480" r="4" fill="#38D9D9" opacity="0.5"/>
+</svg>

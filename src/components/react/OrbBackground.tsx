@@ -44,6 +44,9 @@ export default function OrbBackground() {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
+    // Cap DPR at 2 to prevent performance issues on low-end devices
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+
     let width = window.innerWidth;
     let height = window.innerHeight;
     let mouse = { x: -2000, y: -2000, targetX: -2000, targetY: -2000 };
@@ -51,8 +54,13 @@ export default function OrbBackground() {
     let animationId: number;
 
     const resize = () => {
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
+      width = window.innerWidth;
+      height = window.innerHeight;
+      // Set internal canvas resolution capped at 2× DPR
+      canvas.width = Math.round(width * dpr);
+      canvas.height = Math.round(height * dpr);
+      // Scale context so drawing coordinates stay in logical pixels
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     };
 
     const createOrbs = () => {

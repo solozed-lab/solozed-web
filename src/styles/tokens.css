@@ -1,86 +1,126 @@
 :root {
-  /* Primary Colors */
-  --color-primary: #38D9D9;
+  /* ================================================
+     SEMANTIC TOKENS — use these for component values
+     ================================================ */
+
+  /* --- Semantic: Background --- */
+  --color-bg-dark: #0a0a0f;
+  --color-bg-blog: #F5F8FA;
+
+  /* --- Semantic: Text (Blog light theme) --- */
+  --color-text-primary:   #1E293B;   /* headlines, strong emphasis */
+  --color-text-secondary: #475569;   /* body copy */
+  --color-text-tertiary:  #94A3B8;   /* meta, captions, placeholders */
+  --color-text-link:      #0E7490;   /* links, interactive */
+  --color-text-link-hover: #0A5C70;  /* link hover state */
+
+  /* --- Semantic: Primary accent --- */
+  --color-primary:         #38D9D9;
   --color-primary-alpha-08: rgba(56, 217, 217, 0.08);
   --color-primary-alpha-15: rgba(56, 217, 217, 0.15);
   --color-primary-alpha-25: rgba(56, 217, 217, 0.25);
   --color-primary-alpha-30: rgba(56, 217, 217, 0.30);
   --color-primary-alpha-40: rgba(56, 217, 217, 0.40);
 
-  /* Glass Colors */
-  --color-glass-border: rgba(139, 158, 255, 0.08);
-  --color-glass-border-hover: rgba(139, 158, 255, 0.20);
-  --color-glass-bg-dark: rgba(255, 255, 255, 0.08);
-  --color-glass-bg-light: rgba(255, 255, 255, 0.28);
-  --color-glass-bg-light-hover: rgba(255, 255, 255, 0.50);
-  --color-glass-blur: blur(32px);
-  --color-glass-blur-small: blur(12px);
-
-  /* Background Colors */
-  --color-bg-dark: #0a0a0f;
-  --color-bg-blog: #F5F8FA;
-
-  /* Text Colors */
-  --color-text-dark: #1E293B;
-  --color-text-muted: #475569;
-  --color-text-subtle: #94A3B8;
-  --color-text-link: #0E7490;
-
-  /* Accent Colors */
+  /* --- Semantic: Bold / highlight --- */
   --color-accent-bold: #F29719;
 
-  /* Tag Colors */
-  --color-tag-purple-bg: rgba(139, 92, 246, 0.07);
-  --color-tag-purple-text: #7C3AED;
-  --color-tag-cyan-bg: rgba(56, 189, 248, 0.07);
-  --color-tag-cyan-text: #0284C7;
-  --color-tag-blue-bg: rgba(59, 130, 246, 0.07);
-  --color-tag-blue-text: #2563EB;
-  --color-tag-red-bg: rgba(239, 68, 68, 0.07);
-  --color-tag-red-text: #DC2626;
-  --color-tag-green-bg: rgba(34, 197, 94, 0.07);
-  --color-tag-green-text: #16A34A;
-  --color-tag-yellow-bg: rgba(251, 191, 36, 0.07);
-  --color-tag-yellow-text: #D97706;
-  --color-tag-pink-bg: rgba(236, 72, 153, 0.07);
-  --color-tag-pink-text: #DB2777;
+  /* --- Semantic: Glass (dark — homepage) --- */
+  --glass-bg-dark:    rgba(255, 255, 255, 0.08);
+  --glass-bg-dark-hover: rgba(255, 255, 255, 0.14);
+  --glass-border-dark: rgba(255, 255, 255, 0.18);
+  --glass-blur-dark: blur(32px);
 
-  /* Spacing */
-  --spacing-xs: 0.25rem;
-  --spacing-sm: 0.5rem;
-  --spacing-md: 1rem;
-  --spacing-lg: 1.5rem;
-  --spacing-xl: 2rem;
-  --spacing-2xl: 3rem;
-  --spacing-3xl: 4rem;
+  /* --- Semantic: Glass (light — blog pages) --- */
+  --glass-bg-light:    rgba(255, 255, 255, 0.28);
+  --glass-bg-light-hover: rgba(255, 255, 255, 0.50);
+  --glass-border-light: rgba(139, 158, 255, 0.08);
+  --glass-border-light-hover: rgba(56, 217, 217, 0.30);
+  --glass-blur-light: blur(32px);
 
-  /* Border Radius */
-  --radius-sm: 4px;
-  --radius-md: 8px;
-  --radius-lg: 12px;
-  --radius-xl: 20px;
+  /* --- Semantic: Tag palette (hash-assigned per tag) --- */
+  --tag-purple-bg: rgba(139, 92, 246, 0.07);  --tag-purple-text: #7C3AED;
+  --tag-cyan-bg:   rgba(56, 189, 248, 0.07);  --tag-cyan-text:   #0284C7;
+  --tag-blue-bg:   rgba(59, 130, 246, 0.07);  --tag-blue-text:   #2563EB;
+  --tag-red-bg:    rgba(239, 68, 68, 0.07);   --tag-red-text:    #DC2626;
+  --tag-green-bg:  rgba(34, 197, 94, 0.07);   --tag-green-text:  #16A34A;
+  --tag-yellow-bg: rgba(251, 191, 36, 0.07);   --tag-yellow-text: #D97706;
+  --tag-pink-bg:   rgba(236, 72, 153, 0.07);  --tag-pink-text:   #DB2777;
+
+  /* ================================================
+     TYPOGRAPHY
+     ================================================ */
+  --font-family:      'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-family-mono:  'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+
+  --font-size-xs:   0.625rem;
+  --font-size-sm:   0.6875rem;
+  --font-size-base: 0.875rem;
+  --font-size-lg:   1.0625rem;
+  --font-size-xl:   1.125rem;
+  --font-size-2xl:  1.375rem;
+  --font-size-3xl:  1.75rem;
+  --font-size-4xl:  2rem;
+  --font-size-5xl:  2.75rem;
+
+  --line-height-tight:  1.25;   /* headings */
+  --line-height-normal: 1.55;   /* card titles, subheadings */
+  --line-height-body:   2.0;    /* article body paragraphs */
+
+  --letter-spacing-tight:  -0.03em;  /* display headings */
+  --letter-spacing-normal: -0.01em;  /* card titles */
+  --letter-spacing-wide:   0.01em;   /* english tagline */
+  --letter-spacing-wider:  0.05em;   /* footer, meta */
+
+  /* ================================================
+     SPACING
+     ================================================ */
+  --space-1:  0.25rem;   /* 4px */
+  --space-2:  0.5rem;    /* 8px */
+  --space-3:  0.75rem;   /* 12px */
+  --space-4:  1rem;      /* 16px */
+  --space-5:  1.25rem;   /* 20px */
+  --space-6:  1.5rem;    /* 24px */
+  --space-8:  2rem;      /* 32px */
+  --space-10: 2.5rem;    /* 40px */
+  --space-12: 3rem;      /* 48px */
+  --space-16: 4rem;      /* 64px */
+
+  /* ================================================
+     LAYOUT
+     ================================================ */
+  --max-width-article: 720px;   /* optimal reading width */
+  --max-width-card:    380px;   /* blog card min-width */
+
+  /* ================================================
+     RADIUS
+     ================================================ */
+  --radius-sm:   4px;
+  --radius-md:   8px;
+  --radius-lg:   12px;
+  --radius-xl:   20px;
+  --radius-2xl:  24px;
   --radius-full: 9999px;
 
-  /* Shadows */
-  --shadow-glow: 0 0 20px rgba(56, 217, 217, 0.08);
-  --shadow-glow-strong: 0 0 20px rgba(56, 217, 217, 0.15);
-  --shadow-card: 0 16px 32px rgba(56, 217, 217, 0.06), 0 6px 12px rgba(0, 0, 0, 0.02);
+  /* ================================================
+     SHADOWS
+     ================================================ */
+  --shadow-glow:        0 0 20px rgba(56, 217, 217, 0.08);
+  --shadow-glow-hover:  0 0 28px rgba(56, 217, 217, 0.18);
+  --shadow-card:        0 16px 32px rgba(56, 217, 217, 0.06), 0 6px 12px rgba(0, 0, 0, 0.02);
+  --shadow-card-hover:  0 0 0 1px rgba(56, 217, 217, 0.15),
+                        0 0 20px rgba(56, 217, 217, 0.08),
+                        0 0 40px rgba(56, 217, 217, 0.04),
+                        0 16px 32px rgba(56, 217, 217, 0.06),
+                        0 6px 12px rgba(0, 0, 0, 0.03);
+  --shadow-inset:       inset 0 1px 2px rgba(0, 0, 0, 0.06);
 
-  /* Transitions */
-  --transition-fast: 150ms ease;
-  --transition-normal: 300ms ease;
-  --transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-spring: 400ms cubic-bezier(0.34, 1.56, 0.64, 1);
-
-  /* Typography */
-  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-size-xs: 0.625rem;
-  --font-size-sm: 0.6875rem;
-  --font-size-base: 0.875rem;
-  --font-size-lg: 1.0625rem;
-  --font-size-xl: 1.125rem;
-  --font-size-2xl: 1.375rem;
-  --font-size-3xl: 1.75rem;
-  --font-size-4xl: 2rem;
-  --font-size-5xl: 2.75rem;
+  /* ================================================
+     TRANSITIONS
+     ================================================ */
+  --ease-out:    cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --duration-fast:   150ms;
+  --duration-normal: 300ms;
+  --duration-slow:   500ms;
 }
