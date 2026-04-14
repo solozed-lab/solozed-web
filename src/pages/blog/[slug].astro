@@ -33,6 +33,21 @@ const image = post.data.image ?? '/og-default.svg';
 
 const timeToRead = readingTime(post.body);
 
+// Approximate word count for schema: Chinese chars + English words
+const rawBody = post.body
+  .replace(/```[\s\S]*?```/g, '')
+  .replace(/`[^`]*`/g, '')
+  .replace(/!\[.*?\]\(.*?\)/g, '')
+  .replace(/\[.*?\]\(.*?\)/g, '')
+  .replace(/[#*_~>\-|]/g, '')
+  .replace(/<[^>]+>/g, '');
+const chineseChars = (rawBody.match(/[\u4e00-\u9fff]/g) || []).length;
+const englishWords = rawBody
+  .replace(/[\u4e00-\u9fff]/g, ' ')
+  .split(/\s+/)
+  .filter(w => w.length > 0).length;
+const wordCount = chineseChars + englishWords;
+
 const articleSchema = {
   "@context": "https://schema.org",
   "@type": "Article",
@@ -40,7 +55,7 @@ const articleSchema = {
   "description": post.data.description,
   "datePublished": post.data.pubDate.toISOString(),
   "dateModified": (post.data.updatedDate ?? post.data.pubDate).toISOString(),
-  "wordCount": post.body.replace(/[#*`>\[\]!|]/g, '').replace(/\s/g, '').length,
+  "wordCount": wordCount,
   "timeToRead": timeToRead,
   "url": canonicalUrl,
   "author": {
@@ -150,7 +165,9 @@ const articleSchema = {
     font-family: var(--font-family);
     background: var(--color-bg-blog);
     color: var(--color-text-primary);
-    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
     margin: 0;
   }
 
@@ -161,10 +178,11 @@ const articleSchema = {
   .main {
     position: relative;
     z-index: 1;
+    flex: 1;
     max-width: 1200px;
+    width: 100%;
     margin: 0 auto;
     padding: 7rem 2rem 6rem;
-    flex: 1;
   }
 
   /* --- Article card --- */
@@ -351,7 +369,7 @@ const articleSchema = {
   .article-content :global(pre code) {
     background: none;
     padding: 0;
-    color: #E2E8F0;
+    color: #CBD5E1;
     font-family: var(--font-family-mono);
     font-size: var(--font-size-sm);
     line-height: 1.7;

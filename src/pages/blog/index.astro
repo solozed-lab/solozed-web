@@ -169,8 +169,7 @@ const blogSchema = {
     font-family: var(--font-family);
     background: var(--color-bg-blog);
     color: var(--color-text-primary);
-    min-height: 100vh;
-    overflow-x: hidden;
+    min-height: 100dvh;
     margin: 0;
   }
 
@@ -178,6 +177,7 @@ const blogSchema = {
     position: relative;
     z-index: 1;
     max-width: 1200px;
+    width: 100%;
     margin: 0 auto;
     padding: 7rem 2rem 6rem;
   }
@@ -229,7 +229,7 @@ const blogSchema = {
     font-weight: 500;
     color: var(--color-text-secondary);
     background: transparent;
-    border: 1px solid rgba(139, 158, 255, 0.18);
+    border: 1px solid var(--tag-filter-border);
     border-radius: var(--radius-full);
     cursor: pointer;
     transition: all var(--duration-normal) var(--ease-out);
@@ -267,7 +267,7 @@ const blogSchema = {
     font-size: var(--font-size-base);
     color: var(--color-text-primary);
     background: rgba(255, 255, 255, 0.55);
-    border: 1px solid rgba(139, 158, 255, 0.15);
+    border: 1px solid var(--color-primary-alpha-40);
     border-radius: var(--radius-full);
     outline: none;
     transition: all var(--duration-normal) var(--ease-out);
@@ -374,8 +374,10 @@ const blogSchema = {
     border-radius: 4px;
   }
 
-  .card:hover .card-title {
+  .card:hover .card-title a {
     color: var(--color-text-link);
+    text-decoration: underline;
+    text-underline-offset: 3px;
   }
 
   .card-desc {
@@ -441,7 +443,8 @@ const blogSchema = {
     .card { padding: var(--space-5); }
     .header-title { font-size: 1.5rem; }
     .search-filter { gap: var(--space-3); margin-bottom: var(--space-6); }
-    .tag-filters { justify-content: flex-start; }
+    .tag-filters { justify-content: flex-start; overflow-x: auto; scrollbar-width: none; -ms-overflow-style: none; }
+    .tag-filters::-webkit-scrollbar { display: none; }
   }
 
   @media (max-width: 480px) {
