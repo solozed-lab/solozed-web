@@ -15,9 +15,9 @@ interface ShapeGridProps {
 const ShapeGrid = ({
   direction = 'right',
   speed = 1,
-  borderColor = '#999',
+  borderColor = 'rgba(255, 255, 255, 0.12)',
   squareSize = 40,
-  hoverFillColor = '#222',
+  hoverFillColor = 'rgba(255, 255, 255, 0.05)',
   shape = 'square',
   hoverTrailAmount = 0,
   className = ''
