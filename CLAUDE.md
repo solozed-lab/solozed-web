@@ -118,6 +118,36 @@ Glass cards use `backdrop-filter: blur(32px)` with `rgba(255,255,255,0.28)` back
 
 Tags use deterministic color assignment via `getTagColor(tag)` function (hash-based). No hardcoded per-tag CSS classes.
 
+## Writing Standards
+
+### Frontmatter (必须完整)
+
+所有博客文章 frontmatter 必须包含 `title`、`description`、`pubDate`、`tags`，缺一不可：
+
+```yaml
+---
+title: "文章标题"
+description: "简短描述，不超过 100 字"
+pubDate: 2026-04-16
+tags: ["Tag1", "Tag2"]
+---
+```
+
+### 引号格式
+
+- **中文正文内引用**：统一使用「」书名号，例如：`他说「今天天气真好」`
+- **YAML frontmatter**：`title` 和 `description` 中的引号保持英文 `"..."` 不变
+- **代码块内容**：保持原始引号不变，不做转换
+
+### 微信公众号写作风格
+
+- **叙事优先**：先说数据/感受，再说方法论，结论前置
+- **节奏感**：每个段落不超过 3 行，长句拆开
+- **共鸣开头**：开头用第一人称真实场景，不要用「今天我要讲的是……」这类套话
+- **结尾留白**：画面型结尾（描述一个具体场景），不用追问型或反转型
+- **删除冗余**：每句必须有存在理由，「其实」「基本上」「大概」这类模糊词一律删掉
+- **中英混排**：英文词组两侧不加空格，例如「Chrome 浏览器」「X 平台」
+
 ## Git Workflow
 
 - **Never modify `main` directly.** All feature development and bug fixes must happen in a separate branch.
