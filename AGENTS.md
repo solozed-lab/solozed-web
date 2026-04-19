@@ -275,9 +275,9 @@ AI 应在以下情况主动汇报：
 
 ## 当前项目状态
 
-- 分支：`feat/ux-design-refinement`，待合并 main
+- 分支：`feat/design-quality-audit`，设计质量审计完成，待合并 main
 - 已完成：Layout 统一、readingTime/filter 联动、tokens.css/image 字段修复
-- 待修复：博客 tag filter 移动端横向滚动（方案：overflow-x: auto）
+- 本次新增：cc-design 审计修复（7项 P0/P1 问题）
 
 ---
 
