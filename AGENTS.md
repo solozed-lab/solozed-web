@@ -281,6 +281,22 @@ AI 应在以下情况主动汇报：
 
 ---
 
+## Solozed 本地化分支（multica 项目）
+
+**项目路径**：`~/Projects/multica/`（forked from `multica-ai/multica` → `solozed-lab/multica`）
+
+**分支**：`feat/localize`
+
+**关键决策**：Go module 路径 `github.com/multica-ai/multica` **保留不变**，以便持续 `git merge upstream/main` 同步上游。只替换可见层（品牌/URL/logo），不改动 import 路径。
+
+**已完成**：Landing i18n（en/zh）、Email 模板、Auth 页面、SEO 元数据、安装脚本（brew + binary）、cmd_setup.go 默认 server URL、Logo SVG。
+
+**待处理**：Phase 3 — 核心页面 UI 深层汉化（issues/projects/settings 等，按需进行）。
+
+**配置文件**：`~/Projects/multica/CONFIG.md`
+
+---
+
 ## Success Criteria（验收标准）
 
 重构后 AI 能：
