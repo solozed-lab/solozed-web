@@ -11,6 +11,7 @@ const { currentPath = '/', theme = 'dark' } = Astro.props;
   <div class="nav-glass">
     <a href="/" class:list={['nav-btn', { active: currentPath === '/' }]} style={theme === 'dark' ? 'color:rgba(255,255,255,0.85)' : 'color:#475569'}>Home</a>
     <a href="/blog" class:list={['nav-btn', { active: currentPath === '/blog' }]} style={theme === 'dark' ? 'color:rgba(255,255,255,0.85)' : 'color:#475569'}>Blog</a>
+    <a href="https://wiki.solozed.com" target="_blank" rel="noopener noreferrer" class="nav-btn" style={theme === 'dark' ? 'color:rgba(255,255,255,0.85)' : 'color:#475569'}>Wiki</a>
     <a href="https://md.solozed.com" target="_blank" rel="noopener noreferrer" class="nav-btn" style={theme === 'dark' ? 'color:rgba(255,255,255,0.85)' : 'color:#475569'}>Momd</a>
   </div>
 </nav>
@@ -29,13 +30,13 @@ const { currentPath = '/', theme = 'dark' } = Astro.props;
 
   .nav-glass {
     display: flex;
-    gap: 0.5rem;
-    padding: 0.375rem 0.625rem;
+    gap: 0.25rem;
+    padding: 0.25rem 0.5rem;
     backdrop-filter: blur(32px);
     -webkit-backdrop-filter: blur(32px);
     border-radius: 9999px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
-    max-width: 280px;
+    max-width: 320px;
     width: 100%;
     transition: all 0.4s ease;
     transform: scale(1);
@@ -78,7 +79,7 @@ const { currentPath = '/', theme = 'dark' } = Astro.props;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0.5rem 1rem;
+    padding: 0.375rem 0.625rem;
     border-radius: 9999px;
     font-size: var(--font-size-sm);
     font-weight: 500;
@@ -87,6 +88,7 @@ const { currentPath = '/', theme = 'dark' } = Astro.props;
     border: 1px solid transparent;
     letter-spacing: 0.02em;
     transform: scale(1);
+    white-space: nowrap;
   }
 
   .nav-btn:hover {
