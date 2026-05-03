@@ -13,7 +13,6 @@ A personal website built with Astro and React, featuring immersive WebGL animati
 | Animations | [Motion](https://motion.dev) + [OGL](https://oframe.github.io/ogl/) (WebGL) |
 | Build Tool | Vite (built into Astro) |
 | Language | TypeScript |
-| Testing | [Playwright](https://playwright.dev) |
 
 ## Features
 
@@ -23,7 +22,6 @@ A personal website built with Astro and React, featuring immersive WebGL animati
 - Blog section with MDX content and glassmorphism UI
 - SEO-optimized with Open Graph, Twitter Card, and GEO tags
 - Sitemap auto-generation
-- WCAG AA color contrast compliance testing
 - Social links with hover effects
 
 ## Getting Started
@@ -63,20 +61,26 @@ npm run preview
 │   │       ├── Aurora.css
 │   │       ├── BackgroundLayer.tsx
 │   │       ├── ShapeGrid.tsx    # WebGL grid with hover effects
+│   │       ├── ShapeGrid.css    # WebGL grid styles
 │   │       └── ShinyText.tsx    # Animated text with shine effect
 │   ├── content/
 │   │   └── blog/               # MDX blog posts
+│   ├── content.config.ts       # Content collection config
 │   ├── layouts/
 │   │   └── Layout.astro         # Base layout with SEO meta
 │   ├── pages/
-│   │   ├── index.astro          # Homepage
+│   │   ├── index.astro          # Homepage (dark theme)
+│   │   ├── rss.xml.js           # RSS feed endpoint
 │   │   └── blog/
-│   │       ├── index.astro     # Blog list page
-│   │       └── [slug].astro    # Blog post detail page
-│   └── styles/
-│       └── global.css
-├── e2e/
-│   └── color-contrast.spec.ts   # WCAG AA contrast tests
+│   │       ├── index.astro     # Blog list page (light theme)
+│   │       └── [slug].astro    # Blog post detail page (light theme)
+│   ├── styles/
+│   │   ├── global.css
+│   │   └── tokens.css
+│   └── utils/
+│       ├── readingTime.ts       # Reading time calculator
+│       ├── tagColors.ts         # Tag color palette
+│       └── tagColors.test.ts    # Unit test
 ├── astro.config.mjs
 └── package.json
 ```
@@ -89,8 +93,19 @@ npm run preview
 | `npm run build` | Build production bundle to `./dist/` |
 | `npm run preview` | Preview production build locally |
 | `npm run astro` | Run Astro CLI (e.g., `astro add`) |
+| `npm run test` | Run vitest unit tests |
+
+## Testing
+
+Unit tests use [Vitest](https://vitest.dev). Test files are colocated in `src/utils/`.
+
+```bash
+npm run test
+```
 
 ## Blog Design System
+
+> The homepage uses a dark theme (`#0a0a0f` background). Blog pages use the light theme described below.
 
 | Token | Value | Usage |
 |-------|-------|-------|
